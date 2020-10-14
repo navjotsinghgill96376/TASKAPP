@@ -16,7 +16,11 @@ const getTask=async(reqBody)=>{
      try{
 
          let result=await Task.find({...reqBody})
-         console.log(result)
+         if(result&& result.length===0 || !result)
+            {
+                let message='No Task in Database';
+                return message;
+            }
          return result
      }
      catch(err){
@@ -32,7 +36,11 @@ const updateTask=async(reqBody)=>{
             {
                 let subtasks=[...reqBody.update.subtask]
                 let Taskfound=await Task.findOne({...reqBody.filter})
-                console.log('task found',Taskfound)
+                if(!Taskfound)
+                {
+                    let message='Task Not Found';
+                    return message;
+                }
                 if(subtasks.length<Taskfound.subtask.length)
                 {
                     for(let i=subtasks.length;i<Taskfound.subtask.length;i++)
@@ -57,7 +65,11 @@ const deleteTask=async(reqBody)=>{
         try{
         
             let result=await Task.findOneAndRemove({...reqBody})
-            console.log(result)
+            if(!result)
+            {
+                let message='Task Not Found';
+                return message;
+            }
             return result
         }
         catch(err){
