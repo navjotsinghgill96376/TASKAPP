@@ -9,6 +9,7 @@ require('../dbconfig')
 app.get('/getTask',async(req,res)=>{
     let response=await getTask(req.body);
     res.send(response);
+    
 })
 app.post('/addTask',async(req,res)=>{
     let response=await addTask(req.body)
